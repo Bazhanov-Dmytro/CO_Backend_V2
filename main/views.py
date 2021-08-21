@@ -23,7 +23,7 @@ class UserViewSet(viewsets.ModelViewSet):
         queryset = self.get_queryset()
         queryset = queryset.filter(organization=request.user.organization)
 
-        if request.user.role == None:
+        if request.user.role is None:
             return Response("Not approved account")
 
         if request.user.role == 2:

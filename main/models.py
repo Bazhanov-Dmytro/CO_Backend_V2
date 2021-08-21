@@ -135,7 +135,7 @@ class Indicators(models.Model):
     higher_pressure = models.DecimalField(max_digits=5, decimal_places=2)
     lower_pressure = models.DecimalField(max_digits=5, decimal_places=2)
     heartbeat_rate = models.IntegerField()
-    temperature = models.DecimalField(max_digits=2, decimal_places=1)
+    temperature = models.DecimalField(max_digits=3, decimal_places=1)
     is_critical = models.BooleanField(default=False)
     timeouts_taken = models.IntegerField(default=0)
 
