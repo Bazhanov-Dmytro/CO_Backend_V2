@@ -41,6 +41,8 @@ class MessageSerializer(serializers.ModelSerializer):
 
 
 class IndicatorsSerializer(serializers.ModelSerializer):
+    user_email = serializers.EmailField()
+
     class Meta:
         model = Indicators
         fields = [

@@ -65,11 +65,26 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     serializer_class = OrganizationSerializer
 
 
-class IndicatorsViewSet(viewsets.ReadOnlyModelViewSet):
-    allowed_methods = ['GET']
+class IndicatorsViewSet(viewsets.ModelViewSet):
+    allowed_methods = ['GET', 'PUT']
     permission_classes = [IsAuthenticated, IsManager]
     queryset = Indicators.objects.all()
     serializer_class = IndicatorsSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        user_instance = User.objects.get(email=request.query_params['email'])
+        indicator_instance = Indicators.objects.get(user_email=user_instance.id)
+        serializer = IndicatorsSerializer(indicator_instance)
+
+        return Response(serializer.data)
+
+    def update(self, request, *args, **kwargs):
+        user_instance = User.objects.get(email=request.query_params['email'])
+        indicator_instance = Indicators.objects.get(user_email=user_instance.id)
+        indicator_instance.timeouts_taken += 1
+        indicator_instance.save()
+
+        return Response("Work break timeout was given")
 
 
 class MessageViewSet(viewsets.ModelViewSet):
